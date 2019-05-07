@@ -4,9 +4,9 @@ function(proposal_id, account_id) {
   
   options(scipen = 200, 
           mongodb = list(
-            "host" = "mongodb://primary:27017" #线上Docker 
+            # "host" = "mongodb://primary:27017" #线上Docker 
             # "host" = "mongodb://docker.for.mac.host.internal:27017" #本地Docker 
-            # "host" = "mongodb://127.0.0.1:27017" #本地直连 
+            "host" = "mongodb://127.0.0.1:27017" #本地直连 
           ), 
           digits = 13, 
           digits.secs = 3)
@@ -44,7 +44,7 @@ function(proposal_id, account_id) {
     dat <- get_data2use(p_data = p_data, input_data = input_data)
     
     ## results
-    results <- get_results(dat = dat, weightages = weightages)
+    results <- get_results(dat = dat, curves = curves, weightages = weightages)
     
     ## reports
     hosp_report <- get_hosp_report(results = results)
