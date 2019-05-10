@@ -170,8 +170,8 @@ function(proposal_id, account_id) {
     print(c(personnel_assessment_ids, personnel_assessment_id_new))
 
     db_paper$update(query = paste0('{"proposal-id" : "', proposal_id, '", "account-id" : "', account_id, '"}'), 
-                    update = paste0('{"$set" : {"sales-report-ids" : ', toJSON(c(sales_report_ids, sales_report_id_new), auto_unbox = TRUE), 
-                                    ', "personnel-assessment-ids" : ', toJSON(c(personnel_assessment_ids, personnel_assessment_id_new), auto_unbox = TRUE), '}}'), 
+                    update = paste0('{"$set" : {"sales-report-ids" : ', toJSON(as.list(c(sales_report_ids, sales_report_id_new)), auto_unbox = TRUE), 
+                                    ', "personnel-assessment-ids" : ', toJSON(as.list(c(personnel_assessment_ids, personnel_assessment_id_new)), auto_unbox = TRUE), '}}'), 
                     upsert = FALSE)
     
     print("output")
