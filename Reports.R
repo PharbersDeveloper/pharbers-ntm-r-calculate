@@ -157,6 +157,10 @@ function(proposal_id, account_id) {
     personnel_assessment_ids_info <- db_personnel_assessment$find(query = paste0('{"scenario-id" : "', scenario_id, '", "paper-input-id" : "', input_id, '"}'), fields = '{"_id" : 1, "time" : 1}')
     personnel_assessment_id_new <- personnel_assessment_ids_info$`_id`[which.max(personnel_assessment_ids_info$time)]
     
+
+    print(sales_report_id_new)
+    print(personnel_assessment_id_new)
+
     db_paper$update(query = paste0('{"proposal-id" : "', proposal_id, '", "account-id" : "', account_id, '"}'), 
                     update = paste0('{"$set" : {"sales-report-ids" : ', toJSON(c(sales_report_ids, sales_report_id_new), auto_unbox = TRUE), 
                                     ', "personnel-assessment-ids" : ', toJSON(c(personnel_assessment_ids, personnel_assessment_id_new), auto_unbox = TRUE), '}}'), 
