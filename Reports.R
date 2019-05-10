@@ -101,6 +101,7 @@ function(proposal_id, account_id) {
                                            ', "time" : ', round(as.numeric(Sys.time())*1000), '}}'), 
                            upsert = TRUE)
     
+    print("update information")
     ## update information
     personnel_assessment_ids <- paper_info$`personnel-assessment-ids`[[1]]
     db_personnel_assessment <- mongo(collection = "PersonnelAssessment", db = options()$mongodb$db, url = options()$mongodb$host)
@@ -140,6 +141,7 @@ function(proposal_id, account_id) {
                                                    ', "time" : ', round(as.numeric(Sys.time())*1000), '}}'), 
                                    upsert = TRUE)
     
+    print("update paper")
     ## update paper
     sales_report_ids <- paper_info$`sales-report-ids`[[1]]
     sales_report_ids_info <- db_sales_report$find(query = paste0('{"scenario-id" : "', scenario_id, '", "paper-input-id" : "', input_id, '"}'), fields = '{"_id" : 1, "time" : 1}')
@@ -152,6 +154,7 @@ function(proposal_id, account_id) {
                                     ', "personnel-assessment-ids" : ', toJSON(c(personnel_assessment_ids, personnel_assessment_id_new), auto_unbox = TRUE), '}}'), 
                     upsert = FALSE)
     
+    print("output")
     ## output
     return(list(status = unbox("Success")))
     
