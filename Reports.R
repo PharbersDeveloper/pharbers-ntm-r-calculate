@@ -104,11 +104,15 @@ function(proposal_id, account_id) {
     print("update information")
     ## update information
     personnel_assessment_ids <- paper_info$`personnel-assessment-ids`[[1]]
+    print(personnel_assessment_ids)
     db_personnel_assessment <- mongo(collection = "PersonnelAssessment", db = options()$mongodb$db, url = options()$mongodb$host)
     personnel_assessment_info <- db_personnel_assessment$find(query = paste0('{"_id" : {"$oid" : "', personnel_assessment_ids[1], '"}}'))
     p_rep_ability_ids <- personnel_assessment_info$`representative-ability-ids`[[1]]
     p_action_kpi_ids <- personnel_assessment_info$`action-kpi-ids`[[1]]
     
+    print(p_rep_ability_ids)
+    print(p_action_kpi_ids)
+
     db_rep_ability <- mongo(collection = "RepresentativeAbility", db = options()$mongodb$db, url = options()$mongodb$host)
     db_action_kpi <- mongo(collection = "ActionKpi", db = options()$mongodb$db, url = options()$mongodb$host)
     
@@ -127,12 +131,16 @@ function(proposal_id, account_id) {
     
     rep_ability_ids <- tail(db_rep_ability$find(query = '{}', fields = '{"_id" : 1}'), nrow(rep_ability))$`_id`
     
+    print(rep_ability_ids)
+
     db_action_kpi$insert(action_kpi, 
                          na = "string", 
                          auto_unbox = TRUE)
     
     action_kpi_ids <- tail(db_action_kpi$find(query = '{}', fields = '{"_id" : 1}'), nrow(action_kpi))$`_id`
     
+    print(action_kpi_ids)
+
     db_personnel_assessment$update(query = paste0('{"time" : "0"}'), 
                                    update = paste0('{"$set" : {"representative-ability-ids" : ', toJSON(rep_ability_ids, auto_unbox = TRUE), 
                                                    ', "action-kpi-ids" : ', toJSON(action_kpi_ids, auto_unbox = TRUE), 
