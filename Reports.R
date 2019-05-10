@@ -166,7 +166,7 @@ function(proposal_id, account_id) {
     print(proposal_id)
     print(account_id)
     print(c(sales_report_ids, sales_report_id_new))
-    print(toJSON(c(sales_report_ids, sales_report_id_new))
+    print(toJSON(c(sales_report_ids, sales_report_id_new)))
     print(c(personnel_assessment_ids, personnel_assessment_id_new))
 
     db_paper$update(query = paste0('{"proposal-id" : "', proposal_id, '", "account-id" : "', account_id, '"}'), 
