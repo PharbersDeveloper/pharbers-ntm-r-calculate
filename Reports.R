@@ -152,10 +152,17 @@ function(proposal_id, account_id) {
                                     ', "personnel-assessment-ids": ', toJSON(c(personnel_assessment_ids, personnel_assessment_id_new), auto_unbox = TRUE), '}}'),
                     upsert = TRUE)
     
-    rm(db_paper)
-    gc()
+    chk <- db_paper$find(query = paste0('{"proposal-id": "',
+                                        proposal_id, 
+                                        '", "account-id": "',
+                                        account_id, '"}'),
+                         fields = '{"sales-report-ids":1, "_id":0}')
+    if (sales_report_id_new %in% unlist(chk$`sales-report-ids`)) {
+      status <- list(status = unbox("Success"))
+    }
     ## output
     # return(list(status = unbox("Success")))
+
     status <- list(status = unbox("Success"))
     
   } else {
