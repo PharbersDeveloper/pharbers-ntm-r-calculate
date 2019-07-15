@@ -17,6 +17,7 @@ RUN R -e 'install.packages("DT", repos = "http://cran.cnr.berkeley.edu/")'
 RUN R -e 'install.packages("plumber", repos = "http://cran.cnr.berkeley.edu/")'
 RUN R -e 'install.packages("mongolite", repos = "http://cran.cnr.berkeley.edu/")'
 RUN R -e 'install.packages("jsonlite", repos = "http://cran.cnr.berkeley.edu/")'
+RUN R -e 'install.packages("data.table", repos = "http://cran.cnr.berkeley.edu/")'
 
 #复制文件
 COPY API.R /API.R

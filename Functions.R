@@ -30,7 +30,9 @@ curve_func <- function(curve, curves, input) {
 ##---- Preprocess ----
 preprocess_tm <- function(receive) {
   
-  data_list <- fromJSON(receive, simplifyDataFrame = TRUE)[[1]][["value"]]
+  data_list <- fromJSON(receive, simplifyVector = FALSE)[[1]][["value"]] %>% 
+    toJSON(auto_unbox = TRUE) %>% 
+    fromJSON(simplifyDataFrame = TRUE)
   
   headers <- list(
     "header" = data_list[["header"]],
@@ -164,28 +166,28 @@ postprocess_tm <- function(headers, scenario, sales_report, representative_info,
       "representativeAbility" = representative_info$representative_ability,
       "actionKpi" = representative_info$action_kpi,
       "regionDivisionResult" = list(
-        "level" = assessment$code[1],
-        "code" = assessment$level_result[1]
+        "level" = assessment$level_result[1],
+        "code" = assessment$code[1]
       ),
       "targetAssignsResult" = list(
-        "level" = assessment$code[2],
-        "code" = assessment$level_result[2]
+        "level" = assessment$level_result[2],
+        "code" = assessment$code[2]
       ),
       "resourceAssignsResult" = list(
-        "level" = assessment$code[3],
-        "code" = assessment$level_result[3]
+        "level" = assessment$level_result[3],
+        "code" = assessment$code[3]
       ),
       "manageTimeResult" = list(
-        "level" = assessment$code[4],
-        "code" = assessment$level_result[4]
+        "level" = assessment$level_result[4],
+        "code" = assessment$code[4]
       ),
       "manageTeamResult" = list(
-        "level" = assessment$code[5],
-        "code" = assessment$level_result[5]
+        "level" = assessment$level_result[5],
+        "code" = assessment$code[5]
       ),
       "generalPerformanceResult" = list(
-        "level" = assessment$code[6],
-        "code" = assessment$level_result[6]
+        "level" = assessment$level_result[6],
+        "code" = assessment$code[6]
       )
     )
   )
@@ -208,6 +210,10 @@ get_result_tm <- function(cal_data, manager_data, p_customer_relationship, curve
   #          `admin_work`, `employee_kpi_and_compliance_check`, `kol_management`, `territory_management_training`, `sales_skills_training`, 
   #          `product_knowledge_training`, `performance_review`, `career_development_guide`) %>% 
   #   mutate(budget = budget/total_budget)
+  
+  p_customer_relationship <- p_customer_relationship %>%
+    setDF() %>%
+    mutate(hospital  = iconv(hospital, "GB18030"))
   
   # general ability
   dat01 <- cal_data %>% 

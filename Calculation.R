@@ -9,11 +9,11 @@ calculation <- function(receive) {
   
   if (length(fromJSON(receive)) != 0) {
     
-    receive <- receive
+    receive <<- receive
     
     send_data <- tryCatch({
       
-      application <- fromJSON(receive, simplifyDataFrame = TRUE)[[1]][["value"]][["header"]][["application"]]
+      application <- fromJSON(receive, simplifyDataFrame = TRUE)[["value"]][["header"]][["application"]]
       
       if (application == "ucb") {
         dat <- preprocess(receive = receive)
@@ -38,14 +38,13 @@ calculation <- function(receive) {
         assessment <- get_assessment_tm(result = result, representative_ability = representative_info$representative_ability, 
                                         p_representative_ability = dat$p_representative_ability, standard_time = standard_time, 
                                         level_data = level_data)
-        
-        send_list <- postprocess_tm(headers = dat$headers, scenario = dat$scenario, sales_report = sales_report, 
+        send_data <- postprocess_tm(headers = dat$headers, scenario = dat$scenario, sales_report = sales_report, 
                                     representative_info = representative_info, assessment = assessment)
       }
       
       
     }, error = function(e) {
-      
+      print(e)
       send_data <- list("error" = list("code" = 500,
                                        "msg" = "Calculation error. "))
     })
