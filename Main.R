@@ -1,0 +1,42 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# ProjectName:  TM_new
+# Purpose:      Main of TM_new
+# programmer:   Zhe Liu
+# Date:         17-06-2019
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+
+
+library(plyr)
+library(dplyr)
+library(tidyr)
+library(DT)
+library(jsonlite)
+library(curl)
+library(uuid)
+
+# source("./Kafka.R", encoding = "UTF-8")
+# source("./Functions.R", encoding = "UTF-8")
+# source("./Calculation.R", encoding = "UTF-8")
+
+source("/Users/qianpeng/GitHub/TM-new/Kafka.R", encoding = "UTF-8")
+source("/Users/qianpeng/GitHub/TM_new/Functions.R", encoding = "UTF-8")
+source("/Users/qianpeng/GitHub/TM_new/Calculation.R", encoding = "UTF-8")
+
+# load("./intermedia.RData")
+load("/Users/qianpeng/GitHub/TM_new/intermedia.RData")
+
+# envir <- read_json("./envir.json")
+envir <- read_json("/Users/qianpeng/GitHub/TM_new/envir.json")
+
+options(scipen = 200,
+        uri = envir$uri,
+        groupName = envir$groupName,
+        receiveTopics = envir$receiveTopics,
+        sendTopics = envir$sendTopics,
+        stringsAsFactors = FALSE)
+
+main <- function() {
+  start(callRConsumer, "", "")
+}
+
+main()
