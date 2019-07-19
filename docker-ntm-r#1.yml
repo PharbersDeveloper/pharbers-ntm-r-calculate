@@ -1,0 +1,16 @@
+version: "3"
+services:
+  ntm_r_calc:
+    image: pharbers/pharbers-ntm-r-calculate
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - /root/config/ntm-config/consumer.txt:/consumer.txt:rw
+      - /root/config/ntm-config/intermedia.RData:/intermedia.RData:rw
+      - /root/config/ntm-config/envir.json:/envir.json:rw
+    networks:
+      - watchweb
+networks:
+  watchweb:
+    external: true
