@@ -5,7 +5,7 @@ FROM rocker/r-base
 MAINTAINER Pharbers Liu <contact@pharbershub>
 
 #LABEL
-LABEL 	UcbPods.version="2.0.1" maintainer="Liu"
+LABEL 	UcbPods.version="2.0.2" maintainer="Liu"
 
 #下载依赖
 RUN apt-get update
