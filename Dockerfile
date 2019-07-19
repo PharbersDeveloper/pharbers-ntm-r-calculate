@@ -5,7 +5,7 @@ FROM rocker/r-base
 MAINTAINER Pharbers Liu <contact@pharbershub>
 
 #LABEL
-LABEL 	UcbPods.version="2.0.0" maintainer="Liu"
+LABEL 	UcbPods.version="2.0.1" maintainer="Liu"
 
 #下载依赖
 RUN apt-get update
@@ -21,6 +21,7 @@ RUN R -e 'install.packages("DT", repos = "http://cran.cnr.berkeley.edu/")'
 RUN R -e 'install.packages("jsonlite", repos = "http://cran.cnr.berkeley.edu/")'
 RUN R -e 'install.packages("curl", repos = "http://cran.cnr.berkeley.edu/")'
 RUN R -e 'install.packages("uuid", repos = "http://cran.cnr.berkeley.edu/")'
+RUN R -e 'install.packages("data.table", repos = "http://cran.cnr.berkeley.edu/")'
 
 COPY ./Functions.R /Functions.R
 COPY ./Kafka.R /Kafka.R
